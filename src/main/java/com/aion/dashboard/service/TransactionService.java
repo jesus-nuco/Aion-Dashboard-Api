@@ -3,7 +3,6 @@ package com.aion.dashboard.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.aion.dashboard.entities.ParserState;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
 import com.aion.dashboard.types.ParserStateType;
 import com.aion.dashboard.utility.Utility;
@@ -17,7 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.aion.dashboard.CacheConfig;
-import com.aion.dashboard.entities.Transaction;
+import com.aion.dashboard.domainobject.ParserState;
+import com.aion.dashboard.domainobject.Transaction;
 import com.aion.dashboard.repository.TransactionJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

@@ -1,4 +1,4 @@
-package com.aion.dashboard.entities;
+package com.aion.dashboard.domainobject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Block")
-public class Block {
+public class BlockDO {
 	
 	@Id
 	Long blockNumber;
@@ -32,6 +32,51 @@ public class Block {
 	Long blockTime;
 	String transactionList;
 	String nrgReward;
+	
+	public BlockDO(Long blockNumber,
+			String blockHash,
+			String minerAddress,
+			String parentHash,
+			String receiptTxRoot,
+			String stateRoot,
+			String txTrieRoot,
+			String extraData,
+			String nonce,
+			String bloom,
+			String solution,
+			String difficulty,
+			String totalDifficulty,
+			Long nrgConsumed,
+			Long nrgLimit,
+			Long size,
+			Long blockTimestamp,
+			Long numTransactions,
+			Long blockTime,
+			String transactionList,
+			String nrgReward) {
+		this.blockNumber=blockNumber;
+		this.blockHash=blockHash;
+		this.minerAddress=minerAddress;
+		this.parentHash=parentHash;
+		this.receiptTxRoot=receiptTxRoot;
+		this.stateRoot=stateRoot;
+		this.txTrieRoot=txTrieRoot;
+		this.extraData=extraData;
+		this.nonce=nonce;
+		this.bloom=bloom;
+		this.solution=solution;
+		this.difficulty=difficulty;
+		this.totalDifficulty=totalDifficulty;
+		this.nrgConsumed=nrgConsumed;
+		this.nrgLimit=nrgLimit;
+		this.size=size;
+		this.blockTimestamp=blockTimestamp;
+		this.numTransactions=numTransactions;
+		this.blockTime=blockTime;
+		this.transactionList=transactionList;
+		this.nrgReward=nrgReward;
+		
+	}
 	
 	public String getTransactionList() {
 		return transactionList;

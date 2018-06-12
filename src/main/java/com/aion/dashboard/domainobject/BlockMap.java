@@ -1,4 +1,4 @@
-package com.aion.dashboard.entities;
+package com.aion.dashboard.domainobject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
