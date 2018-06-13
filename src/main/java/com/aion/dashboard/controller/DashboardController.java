@@ -69,7 +69,7 @@ public class DashboardController {
     public ResponseEntity<Object> getBlockList(@RequestParam(value = "page", required=false)String page,
                                                @RequestParam(value = "size", required = false) String size){
       //  blockListCounter.inc();
-        JSONObject object;
+        JSONObject object=null;
         try{
 
 
@@ -106,7 +106,7 @@ public class DashboardController {
     @RequestMapping(value = "/getTransactionList", method = RequestMethod.GET)
     public ResponseEntity<Object> getTransactionList(@RequestParam(value = "page", required=false)String page,
                                                      @RequestParam(value = "size", required = false) String size){
-        JSONObject object;
+        JSONObject object=null;
 
         try {
             if (!validInt(page) || !validInt(size)){
