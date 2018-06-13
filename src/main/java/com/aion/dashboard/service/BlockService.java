@@ -3,7 +3,6 @@ package com.aion.dashboard.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.aion.dashboard.entities.ParserState;
 import com.aion.dashboard.types.ParserStateType;
 import com.aion.dashboard.utility.Utility;
 import org.json.JSONArray;
@@ -16,7 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.aion.dashboard.CacheConfig;
-import com.aion.dashboard.entities.Block;
+import com.aion.dashboard.domainobject.BlockDO;
+import com.aion.dashboard.domainobject.ParserState;
 import com.aion.dashboard.utility.RewardsCalculator;
 import com.aion.dashboard.repository.BlockJpaRepository;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
@@ -43,15 +43,15 @@ public class BlockService {
 			
 			if(blockParserState.isPresent()) {
 			    long blockNumber = blockParserState.get().getBlockNumber();
-				Page<Block> blockPage = blockJpaRepository
+				Page<BlockDO> blockPage = blockJpaRepository
                         .findByBlockNumberBetween(blockNumber-999L, blockNumber,
                                 new PageRequest(pageNumber, pageSize, sort));
-				List<Block> blockList = blockPage.getContent();
+				List<BlockDO> blockList = blockPage.getContent();
 				ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
 				if(blockList!=null && blockList.size()>0) {
 					for(int i=0;i<blockList.size();i++) {
-						Block block = blockList.get(i);
+						BlockDO block = blockList.get(i);
 						JSONObject result = new JSONObject(ow.writeValueAsString(block));
 						result.remove("transactionList");
 						result.put("blockReward", RewardsCalculator.calculateReward(block.getBlockNumber()));
@@ -94,7 +94,7 @@ public class BlockService {
 
 			if(Utility.validHex(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.searchBlockHash(searchParam);
+				BlockDO block = blockJpaRepository.searchBlockHash(searchParam);
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
@@ -108,7 +108,7 @@ public class BlockService {
 			// find by block number
 			else if(Utility.validLong(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
+				BlockDO block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
@@ -140,7 +140,7 @@ public class BlockService {
 
 			if(Utility.validHex(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.searchBlockHash(searchParam);
+				BlockDO block = blockJpaRepository.searchBlockHash(searchParam);
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
@@ -155,7 +155,7 @@ public class BlockService {
 			// find by block number
 			else if(Utility.validLong(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
+				BlockDO block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
@@ -188,7 +188,7 @@ public class BlockService {
 
 			if(Utility.validHex(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.searchBlockHash(searchParam);
+				BlockDO block = blockJpaRepository.searchBlockHash(searchParam);
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject blockContent = new JSONObject(ow.writeValueAsString(block));
@@ -200,7 +200,7 @@ public class BlockService {
 			// find by block number
 			else if(Utility.validLong(searchParam)) {
 				// block master
-				Block block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
+				BlockDO block = blockJpaRepository.findByBlockNumber(Long.parseLong(searchParam));
 				blockArray = new JSONArray();
 				if(block!=null) {
 					JSONObject blockContent = new JSONObject(ow.writeValueAsString(block));

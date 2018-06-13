@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.aion.dashboard.entities.Transaction;
+import com.aion.dashboard.domainobject.Transaction;
 
 @Repository
 public interface TransactionJpaRepository extends PagingAndSortingRepository<Transaction,Long> {

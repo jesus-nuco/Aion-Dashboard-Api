@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.aion.dashboard.entities.*;
 import com.aion.dashboard.types.ParserStateType;
 import com.aion.dashboard.utility.Utility;
 import io.micrometer.core.annotation.Timed;
@@ -19,7 +18,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.aion.dashboard.controller.Dashboard;
-import com.aion.dashboard.entities.ParserState;
+import com.aion.dashboard.domainobject.*;
 import com.aion.dashboard.utility.RewardsCalculator;
 import com.aion.dashboard.repository.BlockJpaRepository;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
@@ -245,14 +244,14 @@ public class AionStatistics {
 			long blockNumber = parserState.get().getBlockNumber();
 			long transactionId = parserState.get().getTransactionId();
 
-			Page<Block> blockPage = blockJpaRepository
+			Page<BlockDO> blockPage = blockJpaRepository
                     .findByBlockNumberBetween(blockNumber-RT_BLK_COUNT_RETRIEVE, blockNumber,
                     new PageRequest(0, 32, blockSort));
-			List<Block> blockList = blockPage.getContent();
+			List<BlockDO> blockList = blockPage.getContent();
 			JSONArray blockArray = new JSONArray();
 			if(blockList!=null && blockList.size()>0) {
 				for(int i=0;i<Math.min(blockList.size(),RT_BLK_COUNT_DISPLAY);i++) {
-					Block block = blockList.get(i);
+					BlockDO block = blockList.get(i);
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
 					result.put("blockReward", RewardsCalculator.calculateReward(block.getBlockNumber()));
 					result.remove("transactionList");
@@ -301,7 +300,7 @@ public class AionStatistics {
 				size = blockList.size();
 
 				for (int i = 0; i < size; i++) {
-					Block block = blockList.get(i);
+					BlockDO block = blockList.get(i);
 
 					difficultyAccumulator = difficultyAccumulator.add(new BigInteger(block.getDifficulty(),16));
 					txnCount += block.getNumTransactions();

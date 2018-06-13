@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aion.dashboard.blockchain.AionWeb3Api;
+import com.aion.dashboard.domainobject.BlockDO;
+import com.aion.dashboard.domainobject.DailyStatistics;
+import com.aion.dashboard.domainobject.ParserState;
+import com.aion.dashboard.domainobject.RTStatistics;
+import com.aion.dashboard.domainobject.Transaction;
 import com.aion.dashboard.CacheConfig;
-import com.aion.dashboard.entities.Block;
-import com.aion.dashboard.entities.ParserState;
-import com.aion.dashboard.entities.DailyStatistics;
-import com.aion.dashboard.entities.RTStatistics;
-import com.aion.dashboard.entities.Transaction;
 import com.aion.dashboard.repository.BlockJpaRepository;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
 import com.aion.dashboard.repository.TransactionJpaRepository;
@@ -292,9 +292,9 @@ public class Dashboard {
 				Optional<ParserState> blockParserState = parserStateJpaRepository.findById(ParserStateType.HEAD_BLOCK_TABLE.getId());
 				if(blockParserState.isPresent()) {
 					long blockNumber = blockParserState.get().getBlockNumber();
-					Page<Block> blockPageList = blockJpaRepository.findByBlockNumberBetweenAndMinerAddress(blockNumber - ACCOUNTS_TX_TO_SEARCH, blockNumber, searchParam, new PageRequest(blockPageNumber, blockPageSize, sort));
+					Page<BlockDO> blockPageList = blockJpaRepository.findByBlockNumberBetweenAndMinerAddress(blockNumber - ACCOUNTS_TX_TO_SEARCH, blockNumber, searchParam, new PageRequest(blockPageNumber, blockPageSize, sort));
 					if(blockPageList!=null) {
-						List<Block> blockList = blockPageList.getContent();
+						List<BlockDO> blockList = blockPageList.getContent();
 						if(blockList!=null && blockList.size()>0) {
 							for(int i=0;i<blockList.size();i++) {
 								JSONObject result = new JSONObject(ow.writeValueAsString(blockList.get(i)));
