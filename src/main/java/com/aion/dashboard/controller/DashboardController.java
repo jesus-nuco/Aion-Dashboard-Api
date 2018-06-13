@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardController {
 
 
-    @Autowired
-    public Mapper mapper;
+//    @Autowired
+//    public Mapper mapper;
 //    @Autowired
 //    private BlockJpaRepository blockJpaRepository;
 //
@@ -81,7 +81,7 @@ public class DashboardController {
                 int pageNumber = page == null ? 0 : Integer.parseInt(page);
                 int pageSize = size == null ? 25 : Integer.parseInt(size);
 
-                object = mapper.getBlockList(pageNumber, pageSize);
+                //object = mapper.getBlockList(pageNumber, pageSize);
             }
         }
         catch (IllegalArgumentException e){
@@ -116,7 +116,7 @@ public class DashboardController {
             int pageNumber = page == null ? 0 : Integer.parseInt(page);
             int pageSize = size == null ? 25 : Integer.parseInt(size);
 
-            object = mapper.getTransactionList(pageNumber, pageSize);
+            //object = mapper.getTransactionList(pageNumber, pageSize);
 
         }
         catch (IllegalArgumentException e){
@@ -140,7 +140,7 @@ public class DashboardController {
                 throw new IllegalArgumentException();
             }
             else {
-                object = mapper.findByTransactionHash(searchParam);
+                //object = mapper.findByTransactionHash(searchParam);
             }
         }
         catch (IllegalArgumentException e){

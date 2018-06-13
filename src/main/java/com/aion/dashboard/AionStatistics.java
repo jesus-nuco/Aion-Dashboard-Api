@@ -254,20 +254,20 @@ public class AionStatistics {
 					BlockDO block = blockList.get(i);
 					JSONObject result = new JSONObject(ow.writeValueAsString(block));
 					result.put("blockReward", RewardsCalculator.calculateReward(block.getBlockNumber()));
-					result.remove("transactionList");
+					result.remove("transactionDOList");
 					blockArray.put(result);
 				}
 			}
 
-			Page<Transaction> transactionPage = transactionJpaRepository
+			Page<TransactionDO> transactionPage = transactionJpaRepository
 					.findByIdBetween(transactionId-RT_TXN_COUNT_RETRIEVE, transactionId,
                             new PageRequest(0, 10, transactionSort));
-			List<Transaction> transactionList = transactionPage.getContent();
+			List<TransactionDO> transactionDOList = transactionPage.getContent();
 			JSONArray transactionArray = new JSONArray();
-			if(transactionList!=null && transactionList.size()>0) {
-				for(int i=0;i<Math.min(transactionList.size(),RT_TXN_COUNT_DISPLAY);i++) {
-					Transaction transaction = transactionList.get(i);
-					transactionArray.put(new JSONObject(ow.writeValueAsString(transaction)));
+			if(transactionDOList !=null && transactionDOList.size()>0) {
+				for(int i = 0; i<Math.min(transactionDOList.size(),RT_TXN_COUNT_DISPLAY); i++) {
+					TransactionDO transactionDO = transactionDOList.get(i);
+					transactionArray.put(new JSONObject(ow.writeValueAsString(transactionDO)));
 				}
 			}
 

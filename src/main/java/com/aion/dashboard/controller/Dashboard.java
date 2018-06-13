@@ -3,6 +3,7 @@ package com.aion.dashboard.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.aion.dashboard.domainobject.*;
 import com.aion.dashboard.types.ParserStateType;
 import com.aion.dashboard.utility.Utility;
 import org.json.JSONArray;
@@ -20,11 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aion.dashboard.blockchain.AionWeb3Api;
-import com.aion.dashboard.domainobject.BlockDO;
-import com.aion.dashboard.domainobject.DailyStatistics;
-import com.aion.dashboard.domainobject.ParserState;
-import com.aion.dashboard.domainobject.RTStatistics;
-import com.aion.dashboard.domainobject.Transaction;
+import com.aion.dashboard.domainobject.TransactionDO;
 import com.aion.dashboard.CacheConfig;
 import com.aion.dashboard.repository.BlockJpaRepository;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
@@ -216,13 +213,13 @@ public class Dashboard {
 				Optional<ParserState> parserState = parserStateJpaRepository.findById(ParserStateType.HEAD_BLOCK_TABLE.getId());
 				if(parserState.isPresent()) {
 					long transactionId = parserState.get().getTransactionId();
-					Page<Transaction> transactionPageList = transactionJpaRepository.findByIdBetweenAndFromAddrOrToAddr(transactionId - ACCOUNTS_TX_TO_SEARCH,
+					Page<TransactionDO> transactionPageList = transactionJpaRepository.findByIdBetweenAndFromAddrOrToAddr(transactionId - ACCOUNTS_TX_TO_SEARCH,
 							transactionId, searchParam, searchParam, new PageRequest(transactionPageNumber, transactionPageSize, sort));
 					if(transactionPageList!=null) {
-						List<Transaction> transactionList = transactionPageList.getContent();
-						if(transactionList!=null && transactionList.size()>0) {
-							for(int i=0;i<transactionList.size();i++) {
-								JSONObject result = new JSONObject(ow.writeValueAsString(transactionList.get(i)));
+						List<TransactionDO> transactionDOList = transactionPageList.getContent();
+						if(transactionDOList !=null && transactionDOList.size()>0) {
+							for(int i = 0; i< transactionDOList.size(); i++) {
+								JSONObject result = new JSONObject(ow.writeValueAsString(transactionDOList.get(i)));
 								transactionArray.put(result);
 							}
 

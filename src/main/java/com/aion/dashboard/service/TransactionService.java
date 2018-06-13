@@ -3,6 +3,7 @@ package com.aion.dashboard.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.aion.dashboard.domainobject.TransactionDO;
 import com.aion.dashboard.repository.ParserStateJpaRepository;
 import com.aion.dashboard.types.ParserStateType;
 import com.aion.dashboard.utility.Utility;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import com.aion.dashboard.CacheConfig;
 import com.aion.dashboard.domainobject.ParserState;
-import com.aion.dashboard.domainobject.Transaction;
 import com.aion.dashboard.repository.TransactionJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -42,16 +42,16 @@ public class TransactionService {
 			
 			if(parserState.isPresent()) {
 				long transactionId = parserState.get().getTransactionId();
-				Page<Transaction> transactionPage = transactionJpaRepository
+				Page<TransactionDO> transactionPage = transactionJpaRepository
 						.findByIdBetween(transactionId-999L, transactionId,
 								new PageRequest(pageNumber, pageSize, sort));
-				List<Transaction> transactionList = transactionPage.getContent();
+				List<TransactionDO> transactionDOList = transactionPage.getContent();
 				ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-				if(transactionList!=null && transactionList.size()>0) {
-					for(int i=0;i<transactionList.size();i++) {
-						Transaction transaction = transactionList.get(i);
-						JSONObject result = new JSONObject(ow.writeValueAsString(transaction));
+				if(transactionDOList !=null && transactionDOList.size()>0) {
+					for(int i = 0; i< transactionDOList.size(); i++) {
+						TransactionDO transactionDO = transactionDOList.get(i);
+						JSONObject result = new JSONObject(ow.writeValueAsString(transactionDO));
 						transactionArray.put(result);
 					}
 
@@ -90,10 +90,10 @@ public class TransactionService {
 			if(searchParam.startsWith("0x"))
 				searchParam = searchParam.replace("0x", "");
 			if(Utility.validHex(searchParam)) {
-				// transaction cache
-				Transaction transaction = transactionJpaRepository.getTransactionByTransactionHash(searchParam);
-				if(transaction!=null) {
-					JSONObject result = new JSONObject(ow.writeValueAsString(transaction));
+				// transactionDO cache
+				TransactionDO transactionDO = transactionJpaRepository.getTransactionByTransactionHash(searchParam);
+				if(transactionDO !=null) {
+					JSONObject result = new JSONObject(ow.writeValueAsString(transactionDO));
 					transactionArray.put(result);
 					return new JSONObject().put("content", transactionArray).toString();
 				}

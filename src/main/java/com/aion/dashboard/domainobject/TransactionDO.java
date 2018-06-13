@@ -6,8 +6,8 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Transaction")
-public class Transaction {
+@Table(name="TransactionDO")
+public class TransactionDO {
 	
 	@Id
 	Long id;

@@ -42,9 +42,9 @@ public class BlockMapper
     }
 
 
-    public static List<BlockDTO> makeBlockDTOList(Collection<BlockDO> blocks)
+    public static List<BlockDTO> makeBlockDTOList(Collection<BlockDO> blockDOS)
     {
-        return blocks.stream()
+        return blockDOS.stream()
             .map(BlockMapper::makeBlockDTO)
             .collect(Collectors.toList());
     }
