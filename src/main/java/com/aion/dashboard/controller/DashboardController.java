@@ -1,12 +1,21 @@
 package com.aion.dashboard.controller;
 
 
+import com.aion.dashboard.controller.mapper.BlockMapper;
+import com.aion.dashboard.datatransferobject.BlockDTO;
 import com.aion.dashboard.datatransferobject.Message;
+import com.aion.dashboard.service.BlockService;
+import com.aion.dashboard.utility.Utility;
+
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -16,6 +25,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardController {
 
 
+	@Autowired
+	BlockService blockService ;
+	
+	 /**
+     * Get a block
+     * @param block 
+     * @return a DTO block object 
+     */
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public BlockDTO test(@RequestParam(value="block",required=true) Long block) {
+		return BlockMapper.makeBlockDTO(blockService.findFirstByBlockNumber(block));
+
+	}
+
+	
     /**
      * Called whenever an error is thrown
      * @param e Exception caught
