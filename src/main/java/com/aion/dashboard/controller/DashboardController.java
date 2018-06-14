@@ -1,7 +1,7 @@
 package com.aion.dashboard.controller;
 
 
-import com.aion.dashboard.datatransferobject.Message;
+import com.aion.dashboard.datatransferobject.MessageDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +19,10 @@ public class DashboardController {
     /**
      * Called whenever an error is thrown
      * @param e Exception caught
-     * @return a Message object
+     * @return a MessageDTO object
      */
 
-    static Message handleError(Exception e){
+    static MessageDTO handleError(Exception e){
 
 
         if (e != null) {
@@ -37,30 +37,30 @@ public class DashboardController {
      * @param errorCode Error code should never be null and are given based on the documentation.
      * @return A message carrying the specified error.
      */
-    static Message handleError(String errorCode){
+    static MessageDTO handleError(String errorCode){
 
         if (errorCode == null) {
             errorCode = "0x201";
         }
-        Message message = new Message();
+        MessageDTO messageDTO = new MessageDTO();
         switch (errorCode){
             case "0x001":
-                message.setErrorMessage("Missing parameter in request.");
+                messageDTO.setErrorMessage("Missing parameter in request.");
                 break;
             case "0x002":
-                message.setErrorMessage("Malformed parameters.");
+                messageDTO.setErrorMessage("Malformed parameters.");
                 break;
             case "0x201":
-                message.setErrorMessage("Internal server error. Please Retry");
+                messageDTO.setErrorMessage("Internal server error. Please Retry");
                 break;
             default:
-                message.setErrorMessage("Invalid Request.");
+                messageDTO.setErrorMessage("Invalid Request.");
                 break;
         }
 
-        message.setErrorCode(errorCode);
+        messageDTO.setErrorCode(errorCode);
 
-        return message;
+        return messageDTO;
     }
 
 
