@@ -1,6 +1,7 @@
 package com.aion.dashboard.domainobject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RTStatistics {
@@ -63,7 +64,12 @@ public class RTStatistics {
 		}catch(Exception e) {
 			e.printStackTrace();
 			JSONObject result = new JSONObject();
-			result.put("message", "Error: Invalid Request");
+			try {
+				result.put("message", "Error: Invalid Request");
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			return result.toString();
 		}
 	}

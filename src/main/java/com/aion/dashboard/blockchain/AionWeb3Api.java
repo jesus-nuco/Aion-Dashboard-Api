@@ -4,6 +4,7 @@ import com.aion.dashboard.config.Config;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.Metrics;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,9 +125,19 @@ public class AionWeb3Api
 
         // create request body
         JSONObject request = new JSONObject();
-        request.put("method", method);
+        try {
+			request.put("method", method);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         if (params != null && params.length() > 0)
-            request.put("params", params);
+			try {
+				request.put("params", params);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
         Object result = null;
         boolean error = false;
