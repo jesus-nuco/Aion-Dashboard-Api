@@ -1,19 +1,19 @@
 package com.aion.dashboard.datatransferobject;
 
-public class Message {
+public class MessageDTO {
 
     private String errorCode;
     private String errorMessage;
 
 
-    public Message(){}
+    public MessageDTO(){}
 
     /**
      * Object used to define errors that have occured within the API
      * @param errorCode to be returned to the client
      * @param errorMessage to be returned to the client
      */
-    public Message(String errorCode, String errorMessage) {
+    public MessageDTO(String errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
@@ -23,7 +23,7 @@ public class Message {
         return errorMessage;
     }
 
-    public Message setErrorMessage(String errorMessage) {
+    public MessageDTO setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
         return this;
     }
@@ -32,7 +32,7 @@ public class Message {
         return errorCode;
     }
 
-    public Message setErrorCode(String errorCode) {
+    public MessageDTO setErrorCode(String errorCode) {
         this.errorCode = errorCode;
         return this;
     }
@@ -40,8 +40,8 @@ public class Message {
     @Override
     public boolean equals(Object that){
         if (that == null) return false;
-        else if (! ((Message) that).errorMessage.equals(this.errorMessage)) return false;
-        else if (! ((Message) that).errorCode.equals(this.errorCode)) return false;
+        else if (! ((MessageDTO) that).errorMessage.equals(this.errorMessage)) return false;
+        else if (! ((MessageDTO) that).errorCode.equals(this.errorCode)) return false;
         else return true;
     }
 
