@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 @SuppressWarnings("Duplicates")
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/v1/dashboard")
 public class Dashboard {
 
 	@Autowired
