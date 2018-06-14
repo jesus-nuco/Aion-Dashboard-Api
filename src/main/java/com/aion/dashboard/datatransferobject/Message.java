@@ -6,6 +6,8 @@ public class Message {
     private String errorMessage;
 
 
+    public Message(){}
+
     /**
      * Object used to define errors that have occured within the API
      * @param errorCode to be returned to the client
@@ -33,5 +35,18 @@ public class Message {
     public Message setErrorCode(String errorCode) {
         this.errorCode = errorCode;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object that){
+        if (that == null) return false;
+        else if (! ((Message) that).errorMessage.equals(this.errorMessage)) return false;
+        else if (! ((Message) that).errorCode.equals(this.errorCode)) return false;
+        else return true;
+    }
+
+    @Override
+    public String toString(){
+        return "{'errorCode':" + errorCode +", 'errorMessage':" + errorMessage + "}";
     }
 }
