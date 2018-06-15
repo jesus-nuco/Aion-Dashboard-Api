@@ -77,6 +77,8 @@ public class BlockDO {
 		this.nrgReward=nrgReward;
 		
 	}
+
+	public BlockDO(){}
 	
 	public String getTransactionList() {
 		return transactionList;
