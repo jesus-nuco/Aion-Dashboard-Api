@@ -4,8 +4,12 @@ package com.aion.dashboard.controller;
 import com.aion.dashboard.controller.mapper.BlockMapper;
 import com.aion.dashboard.datatransferobject.BlockDTO;
 import com.aion.dashboard.datatransferobject.Message;
+import com.aion.dashboard.datatransferobject.TransactionDTO;
 import com.aion.dashboard.service.BlockService;
 import com.aion.dashboard.utility.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping("/v2/dashboard")
@@ -36,6 +41,42 @@ public class DashboardController {
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public BlockDTO test(@RequestParam(value="block",required=true) Long block) {
 		return BlockMapper.makeBlockDTO(blockService.findFirstByBlockNumber(block));
+
+	}
+	
+	@RequestMapping(value = "/test2", method = RequestMethod.GET)
+	public ResponseEntity<BlockDTO> test2(@RequestParam(value="block",required=true) Long block, Pageable pageable) {
+		
+		List<BlockDTO> a=new ArrayList<BlockDTO>();
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		
+		
+		return packageAsEntity(a);
+		//return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		
+		
+
+	}
+	
+	@RequestMapping(value = "/test3", method = RequestMethod.GET)
+	public ResponseEntity<BlockDTO> test3(@RequestParam(value="block",required=true) Long block, Pageable pageable) {
+		
+		List<BlockDTO> a=new ArrayList<BlockDTO>();
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		
+		
+		return packageAsEntity(a);
+		//return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+		
+		
 
 	}
 
@@ -96,7 +137,7 @@ public class DashboardController {
      * @param object
      * @return Entity to be returned to the user
      */
-    static ResponseEntity<Object> packageAsEntity(Object object){
+    static ResponseEntity packageAsEntity(Object object){
 
         if (object == null) {
             object = new Object();
@@ -116,7 +157,7 @@ public class DashboardController {
      * @return Entity to be returned to the user
      */
 
-    static ResponseEntity<Object> packageAsEntity(HttpStatus statusCode, Object object){
+    static ResponseEntity packageAsEntity(HttpStatus statusCode, Object object){
         if (object == null) {
             object = new Object();
         }
