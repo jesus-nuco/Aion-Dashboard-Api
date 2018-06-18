@@ -4,15 +4,9 @@ package com.aion.dashboard.controller;
 import com.aion.dashboard.controller.mapper.BlockMapper;
 import com.aion.dashboard.datatransferobject.BlockDTO;
 import com.aion.dashboard.datatransferobject.Message;
-import com.aion.dashboard.datatransferobject.TransactionDTO;
 import com.aion.dashboard.service.BlockService;
-import com.aion.dashboard.utility.Utility;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
 @SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping("/v2/dashboard")
@@ -64,17 +62,10 @@ public class DashboardController {
 	
 	@RequestMapping(value = "/test3", method = RequestMethod.GET)
 	public ResponseEntity<BlockDTO> test3(@RequestParam(value="block",required=true) Long block, Pageable pageable) {
-		
-		List<BlockDTO> a=new ArrayList<BlockDTO>();
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		
-		
-		return packageAsEntity(a);
-		//return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
+
+        return packageAsEntity(BlockMapper.makeBlockDTOListPaggable(blockService.findByBlockNumberBetween(45L, 63L, pageable)));
+
+        //return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
 		
 		
 
