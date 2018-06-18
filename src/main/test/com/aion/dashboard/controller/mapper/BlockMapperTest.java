@@ -2,7 +2,11 @@ package com.aion.dashboard.controller.mapper;
 
 import com.aion.dashboard.datatransferobject.BlockDTO;
 import com.aion.dashboard.domainobject.BlockDO;
+import com.aion.dashboard.domainobject.BlockMap;
 import org.junit.jupiter.api.BeforeEach;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,22 +67,48 @@ class BlockMapperTest {
     }
 
 
+    /**
+     * Checks that the the Mapper correctly maps the data in the DO to DTO
+     * ie.  the data is placed in the corresponding field in the DO
+     */
     @org.junit.jupiter.api.Test
     void makeBlockDTO() {
 
        // assertTrue(isSame(makeDummyDO(),makeDummyDTO()));
-        assertTrue(isSame(makeDummyDOWithData(),makeDummyDTOWithData()));
+        assertEquals(isSame(makeDummyDOWithData(),makeDummyDTOWithData()), isSame(makeDummyDOWithData(),BlockMapper.makeBlockDTO(makeDummyDOWithData())));
 
 
 
 
     }
 
+    /**
+     * Checks that the mapper correctly converts the DO list to a DTO list
+     */
     @org.junit.jupiter.api.Test
     void makeBlockDTOList() {
+        List<BlockDO> blockDOS = new ArrayList<>();
+        List<BlockDTO> blockDTOS = new ArrayList<>();
+        for (int i = 0; i<10;i++) {
+            blockDOS.add(makeDummyDOWithData());
+            blockDTOS.add(makeDummyDTOWithData());
+
+        }
+        List<BlockDTO> acutalDTOS = BlockMapper.makeBlockDTOList(blockDOS);
+
+
+        assertEquals(blockDTOS.stream().allMatch((blockDTO -> isSame(makeDummyDOWithData(),blockDTO))), acutalDTOS.stream().allMatch(blockDTO -> isSame(makeDummyDOWithData(), blockDTO)) );
+
+
     }
 
 
+    /**
+     * Compares the DO and DTO to ensure that they are the same
+     * @param blockDO
+     * @param blockDTO
+     * @return
+     */
     boolean isSame(BlockDO blockDO, BlockDTO blockDTO){
         if (!blockDO.getBlockNumber().equals(blockDTO.getBlockNumber())) return false;
         else if (!blockDO.getBlockTimestamp().equals(blockDTO.getBlockTimestamp())) return false;
@@ -104,17 +134,7 @@ class BlockMapperTest {
         return true;
     }
     
-    
-    private BlockDO makeDummyDO(){
-        BlockDO blockDO = new BlockDO();
-        
-        return blockDO;
-    }
-    
-    private BlockDTO makeDummyDTO(){
-        
-        return BlockDTO.newBuilder().createDriverDTO();
-    }
+
     
     
     private BlockDO makeDummyDOWithData(){
