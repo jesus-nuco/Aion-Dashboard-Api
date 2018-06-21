@@ -62,4 +62,12 @@ public class BlockMapper
 				.build();
 	}
 
+
+    public static Page<BlockDTO> makeBlockDTOListPaggable(Page<BlockDO> blockDOS)
+    {
+        return blockDOS
+                .map(BlockMapper::makeBlockDTO);
+
+        //return  null;
+    }
 }
