@@ -1,11 +1,13 @@
 package com.aion.dashboard.controller.mapper;
   
+import com.aion.dashboard.datatransferobject.BlockDTO;
+import com.aion.dashboard.datatransferobject.PageableDTO;
+import com.aion.dashboard.domainobject.BlockDO;
+import org.springframework.data.domain.Page;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.aion.dashboard.datatransferobject.BlockDTO;
-import com.aion.dashboard.domainobject.BlockDO;
 
 public class BlockMapper
 {
@@ -48,4 +50,16 @@ public class BlockMapper
             .map(BlockMapper::makeBlockDTO)
             .collect(Collectors.toList());
     }
+
+	public static PageableDTO makePageableDTO(Page<BlockDO> page){
+		return PageableDTO
+				.getBuilder()
+				.setList(page.getContent().parallelStream().map(BlockMapper::makeBlockDTO).collect(Collectors.toList()))
+				.setNumber(page.getNumber())
+				.setSize(page.getSize())
+				.setTotalElements(page.getTotalElements())
+				.setTotalPages(page.getTotalPages())
+				.build();
+	}
+
 }
