@@ -27,4 +27,6 @@ public interface TransactionService {
 	List<Object> getFromTransactionByAccountByIdBetween(Long startId, Long endId);
 
 	List<Object> getToTransactionByAccountByIdBetween(Long startId, Long endId);
+	 
+
 }
