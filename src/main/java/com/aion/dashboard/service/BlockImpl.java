@@ -92,7 +92,6 @@ public class BlockImpl implements BlockService {
 			
 			if(blockParserState.isPresent()) {
 			    long blockNumber = blockParserState.get().getBlockNumber();
-			    //
 				Page<BlockDO> blockPage = blockJpaRepository
                         .findByBlockNumberBetween(blockNumber-999L, blockNumber,
                                 new PageRequest(pageNumber, pageSize, sort));
@@ -266,6 +265,4 @@ public class BlockImpl implements BlockService {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-}
+	}}

@@ -1,25 +1,13 @@
 package com.aion.dashboard.controller;
 
 
-import com.aion.dashboard.controller.mapper.BlockMapper;
-import com.aion.dashboard.datatransferobject.BlockDTO;
-import com.aion.dashboard.datatransferobject.Message;
-import com.aion.dashboard.service.BlockService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import com.aion.dashboard.datatransferobject.MessageDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 
 
 @SuppressWarnings("Duplicates")
@@ -28,57 +16,13 @@ import java.util.List;
 public class DashboardController {
 
 
-	@Autowired
-	BlockService blockService ;
-	
-	 /**
-     * Get a block
-     * @param block 
-     * @return a DTO block object 
-     */
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public BlockDTO test(@RequestParam(value="block",required=true) Long block) {
-		return BlockMapper.makeBlockDTO(blockService.findFirstByBlockNumber(block));
-
-	}
-	
-	@RequestMapping(value = "/test2", method = RequestMethod.GET)
-	public ResponseEntity<BlockDTO> test2(@RequestParam(value="block",required=true) Long block, Pageable pageable) {
-		
-		List<BlockDTO> a=new ArrayList<BlockDTO>();
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		a.add(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		
-		
-		return packageAsEntity(a);
-		//return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		
-		
-
-	}
-	
-	@RequestMapping(value = "/test3", method = RequestMethod.GET)
-	public ResponseEntity<BlockDTO> test3(@RequestParam(value="block",required=true) Long block, Pageable pageable) {
-
-        return packageAsEntity(BlockMapper.makeBlockDTOListPaggable(blockService.findByBlockNumberBetween(45L, 63L, pageable)));
-
-        //return packageAsEntity(BlockDTO.newBuilder().setBlockHash("sssssss").createDriverDTO());
-		
-		
-
-	}
-
-	
     /**
      * Called whenever an error is thrown
      * @param e Exception caught
-     * @return a Message object
+     * @return a MessageDTO object
      */
 
-    static Message handleError(Exception e){
+    static MessageDTO handleError(Exception e){
 
 
         if (e != null) {
@@ -93,30 +37,30 @@ public class DashboardController {
      * @param errorCode Error code should never be null and are given based on the documentation.
      * @return A message carrying the specified error.
      */
-    static Message handleError(String errorCode){
+    static MessageDTO handleError(String errorCode){
 
         if (errorCode == null) {
             errorCode = "0x201";
         }
-        Message message = new Message();
+        MessageDTO messageDTO = new MessageDTO();
         switch (errorCode){
             case "0x001":
-                message.setErrorMessage("Missing parameter in request.");
+                messageDTO.setErrorMessage("Missing parameter in request.");
                 break;
             case "0x002":
-                message.setErrorMessage("Malformed parameters.");
+                messageDTO.setErrorMessage("Malformed parameters.");
                 break;
             case "0x201":
-                message.setErrorMessage("Internal server error. Please Retry");
+                messageDTO.setErrorMessage("Internal server error. Please Retry");
                 break;
             default:
-                message.setErrorMessage("Invalid Request.");
+                messageDTO.setErrorMessage("Invalid Request.");
                 break;
         }
 
-        message.setErrorCode(errorCode);
+        messageDTO.setErrorCode(errorCode);
 
-        return message;
+        return messageDTO;
     }
 
 
@@ -128,7 +72,7 @@ public class DashboardController {
      * @param object
      * @return Entity to be returned to the user
      */
-    static ResponseEntity packageAsEntity(Object object){
+    static ResponseEntity<Object> packageAsEntity(Object object){
 
         if (object == null) {
             object = new Object();
@@ -148,7 +92,7 @@ public class DashboardController {
      * @return Entity to be returned to the user
      */
 
-    static ResponseEntity packageAsEntity(HttpStatus statusCode, Object object){
+    static ResponseEntity<Object> packageAsEntity(HttpStatus statusCode, Object object){
         if (object == null) {
             object = new Object();
         }
