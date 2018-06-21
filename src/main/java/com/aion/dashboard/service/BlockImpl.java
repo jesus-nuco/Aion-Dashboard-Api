@@ -81,8 +81,8 @@ public class BlockImpl implements BlockService {
 	
 
 	
-	
-	//@Cacheable(CacheConfig.BLOCK_LIST)
+	@Override
+	@Cacheable(CacheConfig.BLOCK_LIST)
 	public String getBlockList(int pageNumber, int pageSize) throws Exception {
 		try {
 			Optional<ParserState> blockParserState = parserStateJpaRepository.findById(ParserStateType.HEAD_BLOCK_TABLE.getId());
@@ -130,7 +130,7 @@ public class BlockImpl implements BlockService {
 			throw e;
 		}
 	}
-	
+	@Override
 	@Cacheable(CacheConfig.BLOCK_DETAIL_FROM_BLOCK_HASH_OR_BLOCK_NUMBER)
 	public String findByBlockNumberOrBlockHash(String searchParam) throws Exception{
 		try {
@@ -176,7 +176,7 @@ public class BlockImpl implements BlockService {
 			throw e;
 		}
 	}
-	
+	@Override
 	@Cacheable(CacheConfig.BLOCK_AND_TRANSACTION_DETAIL_FROM_BLOCK_HASH_OR_BLOCK_NUMBER)
 	public String getBlockAndTransactionDetailsFromBlockNumberOrBlockHash(String searchParam) throws Exception{
 		try {
@@ -224,7 +224,7 @@ public class BlockImpl implements BlockService {
 			throw e;
 		}
 	}
-	
+	@Override
 	@Cacheable(CacheConfig.TRANSACTION_DETAIL_FROM_BLOCK_HASH_OR_BLOCK_NUMBER)
 	public String findTransactionByBlockNumberOrBlockHash(String searchParam) throws Exception{
 		try {
