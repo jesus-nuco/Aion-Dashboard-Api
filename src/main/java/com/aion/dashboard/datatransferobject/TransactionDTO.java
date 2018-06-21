@@ -153,7 +153,7 @@ public class TransactionDTO {
         this.nonce = nonce;
     }
 
-    public TransactionDTOBuilder newBuilder(){
+    public static TransactionDTOBuilder newBuilder(){
         return new TransactionDTOBuilder();
     }
 
